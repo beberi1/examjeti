@@ -1,0 +1,190 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+@font-face {
+    font-family: 'chemi';
+    src: url('font/MyriadPro-BlackSemiCn.otf') format('truetype');
+  }
+
+.satauri {
+    margin-top: 15px;
+    font-family: 'chemi';
+    margin-bottom: 36px;
+    font-size: 27px;
+}
+
+
+.mtavari {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pirveli-div {
+    width: 800px;
+    height: 65px;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    border: rgb(167, 167, 167) 1px solid;
+
+}
+
+.meore-div {
+    width: 800px;
+    height: 40px;
+    background-color: #007ad9;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    border: rgb(167, 167, 167) 1px solid;
+}
+
+.mesame-div {
+    width: 800px;
+    height: 39px;
+    background-color: #ffff;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border-radius: 2px;
+    border: rgb(167, 167, 167) 1px solid;
+}
+
+.meotxe-div {
+    width: 800px;
+    height: 39px;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    border: rgb(167, 167, 167) 1px solid;
+}
+
+
+.gadatvirtva {
+    margin-left: 15px;
+    width: 38px;
+    height: 36px;
+    background-image: url(fotoebi/arrows-rotate-solid.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 17px;
+    background-color: #007ad9;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inputi {
+    margin: 0;
+    width: 367px;
+    height: 37px;
+    border-radius: 5px;
+    border: gray 1px solid;
+    margin-left: 320px;
+}
+
+
+.stopi {
+    opacity: 60%;
+    background-color: #007ad9;
+    background-image: url(fotoebi/stop.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 24px;
+    width: 37px;
+    height: 37px;
+    margin-right: 5px;
+    border: 0;
+    border-radius: 5px;
+}
+
+
+.name {
+    margin-left: 10px;
+    font-size: 18px;
+    color: white;
+    font-family: 'chemi';
+}
+
+.name-gverdit {
+    margin-left: 12px;
+    width: 16px;
+    height: 16px;
+    filter: invert(100%);
+}
+
+.test {
+    margin-right: 15px;
+    color: gray;
+}
+
+.marc2{
+    width: 15px;
+    height: 26px;
+    filter: invert(70%);
+    margin-right: 20px;
+}
+
+.marc{
+    width: 10px;
+    height: 26px;
+    filter: invert(70%);
+    margin-right: 20px;
+}
+
+.cent-ricx {
+    width: 35px;
+    height: 35px;
+    border: 0;
+    background-color: #007ad9;
+    color: white;
+}
+
+.marjv{
+    width: 10px;
+    height: 15px;
+    rotate: 180deg;
+    filter: invert(70%);
+    margin-left: 20px;
+}
+
+.marjv2{
+    width: 15px;
+    height: 26px;
+    rotate: 180deg;
+    filter: invert(70%);
+    margin-left: 20px;
+}
+
+
+.marjvis {
+    margin-left: 25px;
+}
+
+.qveda-knopkis {
+    width: 800px;
+    display: flex;
+    justify-content: end;
+}
+
+.qveda-knopka {
+    opacity: 70%;
+    margin-top: 30px;
+    width: 66px;
+    height: 36px;
+    color: white;
+    font-size: 15px;
+    background-color: #007ad9;
+    border: 0;
+    border-radius: 5px;
+}
+
+
+
