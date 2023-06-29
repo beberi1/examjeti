@@ -1,3 +1,8 @@
+Classification: KNeighborsClassifier, SVC, LinearSVC, GaussianNB, MultinomialNB, BernoulliNB
+Regression: LinearRegression, Lasso, Ridge, ElasticNet
+Clustering: KMeans
+
+
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
@@ -7,11 +12,15 @@ from sklearn.svm import LinearSVC
 
 algo = LinearSVC(max_iter=60000)
 
-
 #GridSearch
 from sklearn.model_selection import GridSearchCV
 
 GridSearchCV(algo,parameters,scoring='accuracy',cv=5, n_jobs=-1, verbose=4)
+
+#variance tresholdi
+from sklearn.feature_selection import VarianceThreshold
+variance_selector = VarianceThreshold(threshold=0)    
+X_new = variance_selector.fit_transform(X)
 
 #logistic regression
 from sklearn.linear_model import LogisticRegression
@@ -20,7 +29,6 @@ algo = LogisticRegression(C=0.7, max_iter=120000)
 #KneighboursClassifier
 from sklearn.neighbors import KNeighborsClassifier
 algo = KNeighborsClassifier()
-
 
 #PIPELINE
 hibrid = Pipeline(steps=[("scaling", scaler),("model", algo)])
@@ -35,10 +43,13 @@ data=pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21
 
 data.drop("variety",axis=1,inplace = True)
 
+y = data[['Profit', 'Administration']].values
+X =data['R&D Spend'].values
 
 data["Humidity9am"] = data["Humidity9am"].fillna(data["Humidity9am"].value_counts().index[0])
 
-
+#randeni sheicavs arafers True tu weria anu sheicavs
+#print(data.isnull().any())
 
 #jer es tu qvemos iyeneb
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
