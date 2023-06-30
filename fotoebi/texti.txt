@@ -1,63 +1,280 @@
-Classification: KNeighborsClassifier, SVC, LinearSVC, GaussianNB, MultinomialNB, BernoulliNB
-Regression: LinearRegression, Lasso, Ridge, ElasticNet
-Clustering: KMeans
 
+ერთ ფაილში, სახელად weight.in წერია სამი სახის პროდუქტის წონა. მეორე ფაილში სახელად price.in  წერია ამ პროდუქტების ფასები. მესამე ფაილში გამოიტანეთ მოცემული რაოდენობის პროდუქტების შეძენაზე დახარჯული თანხის ოდენობა.
+#include <iostream>
+#include "fstream"
+#include <algorithm>
+using namespace std;
 
-import pandas as pd
-
-from sklearn.model_selection import train_test_split
-
-#LineaerSVC
-from sklearn.svm import LinearSVC
-
-algo = LinearSVC(max_iter=60000)
-
-#GridSearch
-from sklearn.model_selection import GridSearchCV
-
-GridSearchCV(algo,parameters,scoring='accuracy',cv=5, n_jobs=-1, verbose=4)
-
-#variance tresholdi
-from sklearn.feature_selection import VarianceThreshold
-variance_selector = VarianceThreshold(threshold=0)    
-X_new = variance_selector.fit_transform(X)
-
-#logistic regression
-from sklearn.linear_model import LogisticRegression
-algo = LogisticRegression(C=0.7, max_iter=120000)
-
-#KneighboursClassifier
-from sklearn.neighbors import KNeighborsClassifier
-algo = KNeighborsClassifier()
-
-#PIPELINE
-hibrid = Pipeline(steps=[("scaling", scaler),("model", algo)])
+int main()
+{
+    int a;
+    int b;
+    
+    ifstream shemotana1("weight.in");
+    ifstream shemotana2("price.in");
+    ofstream shetana("mesame_faili");
+   
+    for (int i = 0; i < 3; i++){
+        shemotana1 >> a;
+        shemotana2 >> b;
+        shetana << a * b << " ";
+    }
+    shemotana1.colse();
+    shemotana2.colse();
+    shetana.colse();
+    return 0;
+}
 
 
 
+######################################################################
+A  ორგანზომილებიან ვექტორში ჩაწერილია ნამდვილი რიცხვები. დავწეროთ პროგრამა რომელიც დააბრუნებს ვექტორის უდიდეს და უმცირეს  დადებით ელემენტებს. რიცხვები ვექტორში ჩავწეროთ data  ფაილიდან. გამოვიყენოთ  ფუნქციები   ვექტორის შესავსებად, დასაბეჭდად და გამოთვლებისათვის.
+
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+
+int veqtoris_udidesi_umciresi(vector<vector<int>>& A, int &umciresi);
+
+
+void dabejdva(int &udidesi, int &umciresi){
+    //gamotana terminalshi
+    cout << "yvelaze didi dadebiti ricxvi: " << udidesi << endl;
+    cout << "yvelaze patara dadebiti ricxvi:" << umciresi << endl;
+}
+
+
+void veqtoris_shevseba(vector<vector<int>>& A) {
+    int cvladi;
+    ifstream wamogeba("data1"); //vavseb veqtors
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 6; j++) {
+            wamogeba >> cvladi;
+            A[i][j] = cvladi;
+        }
+    }
+
+    wamogeba.close();
+}
+
+int main() {
+    vector<vector<int>> A;
+    int udidesi = 0; 
+    int umciresi = 0; 
+
+    for (int i = 0; i < 2; i++) {  //shevqmeni organzomilebiani masivi
+        vector<int> striqoni(6);
+        A.push_back(striqoni);
+    }
+
+    veqtoris_shevseba(A);   //shevavse data1 is failidan
+    udidesi = veqtoris_udidesi_umciresi(A, umciresi);    // gavige umciresi da udidesi mnishvnelobebi
+    dabejdva(udidesi, umciresi);
+    
+
+    return 0;
+}
 
 
 
-#daxarisxeba#
-data=pd.read_csv("https://gist.githubusercontent.com/netj/8836201/raw/6f9306ad21398ea43cba4f7d537619d0e07d5ae3/iris.csv")
 
-data.drop("variety",axis=1,inplace = True)
 
-y = data[['Profit', 'Administration']].values
-X =data['R&D Spend'].values
 
-data["Humidity9am"] = data["Humidity9am"].fillna(data["Humidity9am"].value_counts().index[0])
+int veqtoris_udidesi_umciresi(vector<vector<int>>& A, int &umciresi) {
+    int udidesi = A[0][0];
 
-#randeni sheicavs arafers True tu weria anu sheicavs
-#print(data.isnull().any())
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 6; j++) {
+            if (A[i][j] >= 0) {
+                umciresi = A[i][j];   // es imis gamoa ro nebismieri aranulovani mnishvneloba aigos umciresad
+            }
+        }
+    }
 
-#jer es tu qvemos iyeneb
-from sklearn.preprocessing import MinMaxScaler, LabelEncoder
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 6; j++) {
+            if (A[i][j] > 0) {
+                if (A[i][j] > udidesi) {
+                    udidesi = A[i][j]; //vigeb udides mnishvnelobas
+                }
+                if (A[i][j] < umciresi && A[i][j] >= 0) {
+                    umciresi = A[i][j];  // vigeb umcires mnishvnelobas
+                }
+            }
+        }
+    }
 
-encoder = LabelEncoder()
+    return udidesi;
+}
 
-for column in data.columns:
-   if data[column].dtype =='object' or data[column].dtype == bool:  
-       data[column] = encoder.fit_transform(data[column])
-Სტრინგ და ბულ მნიშვნელობებს გადაიყვანს int ად.
+
+######################################################################
+სტრიქონების ვექტორის თითოეული ელემენტი შეიცავს რამოდენიმე სიტყვას. ვექტორი შეავსეთ კონსოლიდან (ზომა არ შეზღუდოთ, შეტანა შეწყვიტეთ ctrl+z ან ctrl+d) . თითოეულ სტრიქონში შეამოწმეთარის თუ არა ქვესტრიქონი „ann”.  თუ ასეთი არსებობს დააფიქსირეთ ამ ქვესტრიქონის დასაწყისის და დასასრულის პოზიციები და მათი რიცხვითი მნიშვნელობების ჯამი ჩაწერეთ რიცხვით ვექტორში. მიღებული ვექტორი დაალაგეთ კლებადობით.
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+void modzebna(vector <string> &v, vector<int> &ricxvebi){
+    //vici ar iyo calke funqcia sachiro tumca
+    //ori varianti gavakete erti for ciklit dzebna meore ki find funqciit
+    //amitomac ase gamoyofa gadavwyvite
+    
+    for (int i =0; i < v.size(); i++){
+        for (int j =0; j < v[i].size(); j++){
+            if (v[i].substr(j, 3) == "ann"){  //vnaxulobt ann aris tu ara titoeul qvestiqonshi
+            ricxvebi.push_back(j+(j+2));     // tu aris mis dasawyisis pozicias vumatebt ors radgan ann
+            // a misi pirveli poziciaa, bolo pozicia ki radgan sam asoiania pirvel pozicias + 2 iqneba
+            }
+        }
+    }
+    
+}
+
+
+int main() {
+    vector <string> v;
+    vector<int> ricxvebi;
+    string cvladi;
+    
+    
+    while (getline(cin, cvladi)) //shegvaqvs sityvebi
+        v.push_back(cvladi);
+    
+
+    modzebna(v,ricxvebi);
+    
+    
+    sort(ricxvebi.rbegin(), ricxvebi.rend()); //dasortireba
+    
+    for (int i = 0; i < ricxvebi.size();i++){  //gamotana
+        cout<<ricxvebi[i] << " ";
+    }
+    
+    return 0;
+}
+
+######################################################################
+რანდომად აგენერირებს, რიცხვებს და მერე ვექტორში რომელიც არაა ნულოვანი იმათ ამრავლებს.
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void randomebis_shetana(vector <int> &v);
+
+int namravli(vector<int> &v, int &raodenoba, int &cvladi){
+    for (int i = 0; i < 5; i ++){
+        if (v[i] != 0){
+            raodenoba++;
+            cvladi *= v[i];
+        }
+    }
+    return cvladi;
+}
+
+
+void gamotana(int raodenoba, int cvladi){
+    cout <<"aranulovnebis raodenobaa: " << raodenoba << endl;
+    cout <<"aranulovnebis namravlia: " << cvladi;
+}
+
+
+int main()
+{
+    vector <int> veqtori;
+    int cvladi=1;
+    int raodenoba = 0;
+   
+    randomebis_shetana(veqtori);
+    namravli(veqtori, raodenoba, cvladi);
+    gamotana(raodenoba,cvladi);
+
+
+    return 0;
+}
+
+
+
+void randomebis_shetana(vector <int> &v){
+    srand(time(0));
+   
+    for ( int i = 0; i < 5; i ++){
+        v.push_back(rand() % 81 - 20);    
+    }
+}
+#########################################################
+შეიტან რიცხვებს, ამ რიცხვებს შეიტანს data1 ფაილში ვთქვათ სახელი ზუსტად არ ვიცი, მერე მეორე ფაილში გადაიტანს იმას რაც პირველში შეიტანე * 5, და მესამე ფალში გადაიტანს პირველი ფაილის და მეორე ვექტორის v[i] * v[i+1].
+#include <iostream>
+#include "fstream"
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    int cvladi;
+    vector <int> vectori1;
+   
+    while (cin>>cvladi){
+        vectori1.push_back(cvladi);
+    }
+
+    ofstream gatana1("data1");
+  
+    for (int i = 0; i < vectori1.size(); i++){
+        gatana1 << vectori1[i] << " ";
+    }
+   
+    gatana1.close();
+
+
+
+    ofstream shetana("data2");
+    ifstream infile("data1");
+   
+    while(infile>>cvladi){
+        shetana << cvladi * 5 << " ";
+    }
+   
+    shetana.close();
+    infile.close();
+   
+   
+   
+   
+    vector <int> v1;
+   
+   
+    ifstream nam1("data1");
+    ifstream nam2("data2");
+    ofstream nam3("data3");
+   
+    for ( int i = 0; i < vectori1.size(); i++){
+        nam1 >> cvladi;
+        v1.push_back(cvladi);
+        nam2 >> cvladi;
+        v1.push_back(cvladi);
+       
+        vectori1[i] = v1[i] * v1[i+1];
+       
+        sort(vectori1.rbegin(), vectori1.rend());
+    }
+
+    for ( int i = 0; i < vectori1.size(); i++){
+        nam3 << vectori1[i] << " ";
+    }
+   
+    nam1.close();
+    nam2.close();
+    nam3.close();
+
+    return 0;
+}
+
+
 
